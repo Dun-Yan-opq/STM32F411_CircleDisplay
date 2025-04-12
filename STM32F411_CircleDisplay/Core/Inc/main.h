@@ -34,6 +34,7 @@ extern "C" {
 #include <stdio.h>
 #include <string.h>
 #include "SD_Card.h"
+#include "LCD_1inch28_test.h"
 
 /* USER CODE END Includes */
 
@@ -62,8 +63,23 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define BLED_Pin GPIO_PIN_1
 #define BLED_GPIO_Port GPIOC
+#define TP_RST_Pin GPIO_PIN_4
+#define TP_RST_GPIO_Port GPIOA
+#define SPI1_CS_Pin GPIO_PIN_4
+#define SPI1_CS_GPIO_Port GPIOC
 #define SDIO_CD_Pin GPIO_PIN_5
 #define SDIO_CD_GPIO_Port GPIOC
+#define LCS_DC_Pin GPIO_PIN_0
+#define LCS_DC_GPIO_Port GPIOB
+#define LCS_RST_Pin GPIO_PIN_1
+#define LCS_RST_GPIO_Port GPIOB
+#define TP_INT_Pin GPIO_PIN_10
+#define TP_INT_GPIO_Port GPIOB
+#define TP_INT_EXTI_IRQn EXTI15_10_IRQn
+#define TP_SDA_Pin GPIO_PIN_7
+#define TP_SDA_GPIO_Port GPIOB
+#define TP_SCL_Pin GPIO_PIN_8
+#define TP_SCL_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 void SD_mount_Fats(void);

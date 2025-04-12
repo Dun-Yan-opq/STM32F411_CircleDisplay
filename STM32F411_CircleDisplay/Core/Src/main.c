@@ -20,7 +20,10 @@
 #include "main.h"
 #include "dma.h"
 #include "fatfs.h"
+#include "i2c.h"
 #include "sdio.h"
+#include "spi.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -77,6 +80,10 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 //char SDPath[4];
 
+// 傳送緩衝區
+uint8_t txBuffer[5] = {0x01, 0x02, 0x03, 0x04, 0x05}; // 範例資料
+#define BUFFER_SIZE sizeof(txBuffer)
+
 /* USER CODE END 0 */
 
 /**
@@ -112,10 +119,19 @@ int main(void)
   MX_USART1_UART_Init();
   MX_SDIO_SD_Init();
   MX_FATFS_Init();
+  MX_SPI1_Init();
+  MX_TIM4_Init();
+  MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
 
+  // Start timer4
+  HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
+
 //  SDIO_write_read_test();
-  SD_mount_Fats_test_to_debug();
+//  SD_mount_Fats_test_to_debug();
+
+
+  LCD_1in28_test();
   /* USER CODE END 2 */
 
   /* Infinite loop */
