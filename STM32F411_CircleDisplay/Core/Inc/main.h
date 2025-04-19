@@ -33,8 +33,6 @@ extern "C" {
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 #include <string.h>
-#include "SD_Card.h"
-#include "LCD_1inch28_test.h"
 
 /* USER CODE END Includes */
 

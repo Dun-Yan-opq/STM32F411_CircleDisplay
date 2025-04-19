@@ -4,17 +4,53 @@
  *  Created on: Mar 29, 2025
  *      Author: Dennis
  */
-#include "SD_Card.h"
+#include "SD_Card_Task.h"
 #include "fatfs.h"
 
 FRESULT  f_res;      // FatFs 返回狀態
-BYTE work[4096];  // 工作缓冲区，至少 4KB
+static BYTE work[4096];  // 工作缓冲区，至少 4KB
 
 UINT fnum;                    /* 文件成功读写数量 */
 BYTE WriteBuffer[] =              /* 写缓冲区*/
 	"Dennis使用STM32F411開發板, 透過Fatfs新建文件系統測試文件\r\n";
 BYTE ReadBuffer[1024]= {0};       /* 读缓冲区 */
 
+/* FreeRTOS parameters*/
+static osThreadId_t SD_Card_Task_TaskHandle;
+
+static const osThreadAttr_t SD_Card_Task_attributes ={
+		.name 		= "SD_Card_Task",
+		.priority 	= (osPriority_t)osPriorityNormal,
+		.stack_size = 1024
+};
+
+static void SD_Card_task(void *arg);
+
+void SD_Card_Task_Init(void)
+{
+	SD_Card_Task_TaskHandle = osThreadNew(SD_Card_task,NULL,&SD_Card_Task_attributes);
+	if (SD_Card_Task_TaskHandle == NULL) {
+	    // 任務創建失敗，打印錯誤或處理
+	    printf("SD_Card_Task creation failed!\n");
+	    while (1); // 進入錯誤處理
+	}
+}
+
+static void SD_Card_task(void *arg)
+{
+//  SDIO_write_read_test();
+	/* uxTaskGetStackHighWaterMark() 值越接近0, 代表快要溢出*/
+	printf("Before SD_mount_Fatfs, stack: %lu words\r\n", uxTaskGetStackHighWaterMark(NULL));
+//	SD_mount_Fats_test_to_debug();
+	printf("After SD_mount_Fatfs, stack: %lu words\r\n", uxTaskGetStackHighWaterMark(NULL));
+
+	for(;;)
+	{
+		osDelay(10000);
+	}
+}
+
+/* ------------------------------------------------------------------------------------------ */
 // 向 SD 卡寫入數據
 void SD_WriteData(uint32_t block_addr, uint8_t *data, uint32_t block_count) {
     if (HAL_SD_WriteBlocks(&hsd, data, block_addr, block_count, 5000) == HAL_OK) {
@@ -52,7 +88,7 @@ void ShowSDcardInfo(void)
 	    printf("SDCard block size: %lu\r\n", cardInfo.BlockSize);
 	    printf("SDCard capacity: %lu MB\r\n", (cardInfo.BlockNbr/1048576) * (cardInfo.BlockSize)); //1048576
 	} else {
-	    printf("无法获取卡信息。\r\n");
+	    printf("無法獲取卡信息\r\n");
 	}
 }
 
@@ -90,7 +126,7 @@ void SD_mount_Fatfs(void)
 {
 	/* 注册一个FatFS设备：SD卡 */
     f_mount(NULL, "0:", 0);
-    HAL_Delay(500);  // 延迟 500ms
+    HAL_Delay(1000);  // 延迟 500ms
 	// 挂載 FatFs 文件系統
     f_res = f_mount(&SDFatFS, SDPath, 1);
 	printf("挂载 SD 卡返回值: %d\r\n", f_res);

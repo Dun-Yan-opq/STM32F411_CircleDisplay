@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os.h"
 #include "dma.h"
 #include "fatfs.h"
 #include "i2c.h"
@@ -29,7 +30,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+//#include "LED_Task.h"
+//#include "LCD_Task.h"
+//#include "SD_Card_Task.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -59,8 +62,8 @@
 
 PUTCHAR_PROTOTYPE
 {
-	HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, HAL_MAX_DELAY);
-return ch;
+	HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 100);
+	return ch;
 }
 /* USER CODE END PM */
 
@@ -72,6 +75,7 @@ return ch;
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -127,12 +131,18 @@ int main(void)
   // Start timer4
   HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
 
-//  SDIO_write_read_test();
-//  SD_mount_Fats_test_to_debug();
-
-
-  LCD_1in28_test();
   /* USER CODE END 2 */
+
+  /* Init scheduler */
+  osKernelInitialize();
+
+  /* Call init function for freertos objects (in cmsis_os2.c) */
+  MX_FREERTOS_Init();
+
+  /* Start scheduler */
+  osKernelStart();
+
+  /* We should never get here as control is now taken by the scheduler */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -141,10 +151,6 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  HAL_GPIO_WritePin(BLED_GPIO_Port, BLED_Pin, GPIO_PIN_RESET);
-	  HAL_Delay(100);
-	  HAL_GPIO_WritePin(BLED_GPIO_Port, BLED_Pin, GPIO_PIN_SET);
-	  HAL_Delay(100);
   }
   /* USER CODE END 3 */
 }
@@ -195,6 +201,15 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+// configCHECK_FOR_STACK_OVERFLOW 設置為2
+void vApplicationStackOverflowHook(TaskHandle_t pxTask, char *pcTaskName) {
+	printf("Stack overflow in task: %s\n", pcTaskName);
+	UBaseType_t stackHighWaterMark = uxTaskGetStackHighWaterMark(pxTask);
+	printf("Remaining stack: %u words\n", stackHighWaterMark);
+	vTaskSuspend(pxTask); // 暫停任務
+    // 或者進入安全模式
+    // while (1); // 僅用於調試，生產環境應避免
+}
 //void SD_mount_Fats(void)
 //{
 //    printf("****** 这是一个SD卡文件系统实验 ******\r\n");
@@ -277,6 +292,27 @@ void SystemClock_Config(void)
 //
 //}
 /* USER CODE END 4 */
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM1 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM1) {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+
+  /* USER CODE END Callback 1 */
+}
 
 /**
   * @brief  This function is executed in case of error occurrence.
