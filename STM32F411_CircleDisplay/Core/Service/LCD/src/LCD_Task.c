@@ -11,7 +11,7 @@ static osThreadId_t LCD_Task_TaskHandle;
 static const osThreadAttr_t LCD_Task_attributes ={
 		.name 		= "LCD_Task",
 		.priority 	= (osPriority_t)osPriorityNormal,
-		.stack_size = 512
+		.stack_size = 1024
 };
 
 static void LCD_task(void *arg);

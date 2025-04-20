@@ -74,7 +74,7 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
 
-  SD_Card_Task_Init();
+//  SD_Card_Task_Init();
   LCD_Task_Init();
   LED_Task_Init();
 
