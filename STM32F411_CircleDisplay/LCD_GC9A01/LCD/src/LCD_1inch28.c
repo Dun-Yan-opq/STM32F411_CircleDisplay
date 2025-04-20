@@ -2,12 +2,13 @@
 
 LCD_1IN28_ATTRIBUTES LCD_1IN28;
 
-static void Spi_DMA_Write_byte(uint8_t Reg)
+static void Spi_Write_byte(uint8_t Reg)
 {
 	HAL_GPIO_WritePin(SPI1_CS_GPIO_Port,SPI1_CS_Pin, 0);
 
     // 啟動 SPI DMA 傳輸
-	HAL_SPI_Transmit_DMA(&hspi1, &Reg, 1);
+//	HAL_SPI_Transmit_DMA(&hspi1, &Reg, 1);
+	HAL_SPI_Transmit(&hspi1, &Reg, 1, HAL_MAX_DELAY);
 	// 等待傳輸完成（可選）
 	while (HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
 
@@ -34,7 +35,7 @@ parameter:
 static void LCD_1IN28_SendCommand(uint8_t Reg)
 {
     HAL_GPIO_WritePin(LCS_DC_GPIO_Port,LCS_DC_Pin, 0);
-    Spi_DMA_Write_byte(Reg);
+    Spi_Write_byte(Reg);
 }
 
 /******************************************************************************
@@ -45,7 +46,7 @@ parameter:
 static void LCD_1IN28_SendData_8Bit(uint8_t Data)
 {
     HAL_GPIO_WritePin(LCS_DC_GPIO_Port,LCS_DC_Pin, 1);
-    Spi_DMA_Write_byte(Data);
+    Spi_Write_byte(Data);
 }
 
 /******************************************************************************
@@ -53,13 +54,15 @@ function :	send data
 parameter:
     Data : Write data
 ******************************************************************************/
-static void LCD_1IN28_SendData_16Bit(uint8_t Data)
+static void LCD_1IN28_SendData_16Bit(uint16_t Data)
 {
 	HAL_GPIO_WritePin(LCS_DC_GPIO_Port,LCS_DC_Pin, 1);
-    //LCD_1IN28_CS_0;
-	Spi_DMA_Write_byte(Data >> 8);
-	Spi_DMA_Write_byte(Data);
-    //LCD_1IN28_CS_1;
+
+//	uint8_t a = Data >> 8;
+//	uint8_t b = Data;
+	Spi_Write_byte(Data>>8);
+	Spi_Write_byte(Data);
+
 }
 
 /********************************************************************************
@@ -373,8 +376,8 @@ void LCD_1IN28_Clear(uint16_t Color)
     HAL_GPIO_WritePin(LCS_DC_GPIO_Port,LCS_DC_Pin, 1);
 	for(i = 0; i < LCD_1IN28_WIDTH; i++){
 		for(j = 0; j < LCD_1IN28_HEIGHT; j++){
-			Spi_DMA_Write_byte(Color>>8);
-			Spi_DMA_Write_byte(Color);
+			Spi_Write_byte(Color>>8);
+			Spi_Write_byte(Color);
 		}
 	 }
 }

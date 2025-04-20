@@ -20,7 +20,7 @@ void LCD_1in28_test(void)
 	Paint_SetDisplayFuntion(LCD_1IN28_DrawPaint);
 
 	printf("Paint_Clear\r\n");
-	Paint_Clear(RED);
+	Paint_Clear(WHITE);
 
 	Paint_DrawString_EN(35, 90, "Gesture test", &Font20, BLACK, WHITE);
 	Paint_DrawString_EN(10, 120, "Complete as prompted", &Font16, BLACK, WHITE);
@@ -34,7 +34,7 @@ void LCD_1in28_test(void)
 
 	// Up
 	Paint_ClearWindows(10,90,230,137,WHITE);
-	Paint_DrawString_EN(105, 100, "Up", &Font24, BLACK, WHITE);
+	Paint_DrawString_EN(105, 100, "Up", &Font24, 0X647C, WHITE);
 	while(XY.Gesture != UP)
 	{
 		if (touch_interrupt_flag == TOUCH_IRQ)
@@ -114,5 +114,6 @@ void LCD_1in28_test(void)
 		HAL_Delay(10);
 	}
 
-
+	Paint_ClearWindows(47, 100,200,155,WHITE);
+	Paint_DrawString_EN(35, 100, "Touch Test OK", &Font20, 0X647C, WHITE);
 }

@@ -28,6 +28,6 @@ static void LCD_task(void *arg)
 //	printf("After LCD_1in28_test, stack: %lu words\r\n", uxTaskGetStackHighWaterMark(NULL));
 	for(;;)
 	{
-		  osDelay(10000);
+		osDelay(10000);
 	}
 }
