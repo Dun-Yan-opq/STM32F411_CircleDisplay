@@ -66,7 +66,7 @@ function :	send data
 parameter:
     Data : Write data
 ******************************************************************************/
-static void LCD_1IN28_SendData_16Bit(uint8_t Data)
+static void LCD_1IN28_SendData_16Bit(uint16_t Data)
 {
 	HAL_GPIO_WritePin(LCS_DC_GPIO_Port,LCS_DC_Pin, 1);
     //LCD_1IN28_CS_0;
