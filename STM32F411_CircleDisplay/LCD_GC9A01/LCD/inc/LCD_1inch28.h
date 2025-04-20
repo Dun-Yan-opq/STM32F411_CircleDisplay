@@ -28,7 +28,7 @@ void LCD_1IN28_Init(uint8_t Scan_dir);
 void LCD_1IN28_Clear(uint16_t Color);
 void LCD_1IN28_SetWindows(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend);
 void LCD_1IN28_DrawPaint(uint16_t x, uint16_t y, uint16_t Color);
-
+void LCD_1IN28_Paint_LVGL_Wu(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend, uint16_t *bitmap_color);
 
 #ifdef __cplusplus
 }

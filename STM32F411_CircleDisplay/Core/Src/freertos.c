@@ -28,6 +28,7 @@
 #include "LED_Task.h"
 #include "LCD_Task.h"
 #include "SD_Card_Task.h"
+#include "LVGL_Task.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -74,9 +75,10 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
 
-  SD_Card_Task_Init();
-  LCD_Task_Init();
-  LED_Task_Init();
+//  SD_Card_Task_Init();
+//	LCD_Task_Init();
+    LVGL_Task_Init();
+    LED_Task_Init();
 
   /* USER CODE END Init */
 

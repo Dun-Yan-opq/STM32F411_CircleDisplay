@@ -126,10 +126,13 @@ int main(void)
   MX_SPI1_Init();
   MX_TIM4_Init();
   MX_I2C1_Init();
+  MX_TIM5_Init();
   /* USER CODE BEGIN 2 */
 
   // Start timer4
   HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
+  // Start timer5
+  HAL_TIM_Base_Start_IT(&htim5);
 
   /* USER CODE END 2 */
 
