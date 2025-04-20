@@ -1,7 +1,14 @@
 #include "Touch_Driver.h"
 
-extern Touch_1IN28_XY XY;
+volatile uint8_t touch_interrupt_flag=0;
 
+Touch_1IN28_XY XY = {
+    .mode = 0,
+    .Gesture = 0,
+    .color = 0xFFFF,     // 例如白色
+    .x_point = 0,
+    .y_point = 0
+};
 
 /******************************************************************************
 function :	screen initialization
@@ -175,4 +182,16 @@ uint8_t Touch_I2C_read_one_byte(uint8_t device_address,uint8_t reg_addr, uint8_t
 		return true;
 	}
 	return false;
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+  if(GPIO_Pin == GPIO_PIN_10)
+  {
+	  if(XY.mode == 1)
+	  {
+		  XY = Touch_1IN28_Get_Point();
+	  }
+	  touch_interrupt_flag = TOUCH_IRQ;
+  }
 }

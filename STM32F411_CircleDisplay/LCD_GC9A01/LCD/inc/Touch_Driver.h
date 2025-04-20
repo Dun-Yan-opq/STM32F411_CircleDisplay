@@ -94,6 +94,9 @@ typedef enum {
 	TOUCH_NO_DRAW,
 } Touch_STATE;
 
+extern Touch_1IN28_XY XY;
+extern volatile uint8_t touch_interrupt_flag;
+
 uint8_t Touch_1IN28_init(uint8_t mode);
 void Touch_1IN28_Reset(void);
 uint8_t Touch_1IN28_WhoAmI(void);
