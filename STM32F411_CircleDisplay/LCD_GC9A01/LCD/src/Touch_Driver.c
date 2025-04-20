@@ -162,15 +162,17 @@ Touch_1IN28_XY Touch_1IN28_Get_Point(void)
 {
 	XY.x_point = 0;
 
-	uint8_t reg_addr = GESTUREID; // register 地址
-	uint8_t rx_data[2]={0};
+	uint8_t reg_addr = XposH; // register 地址
+	uint8_t rx_data[4]={0};
 
 	if(HAL_I2C_Master_Transmit(&hi2c1, Touch_DEV_address, &reg_addr, 1, HAL_MAX_DELAY) == HAL_OK)
 	{
 		HAL_I2C_Master_Receive(&hi2c1, Touch_DEV_address, rx_data, sizeof(rx_data), HAL_MAX_DELAY);
-		XY.x_point = (rx_data[1] << 8) | rx_data[0];
+	    XY.x_point = ((rx_data[0] & 0x0f)<<8) + rx_data[1];
+	    XY.y_point = ((rx_data[2] & 0x0f)<<8) + rx_data[3];
+		printf("X:%d\r\n",XY.x_point);
+		printf("Y:%d\r\n",XY.y_point);
 	}
-
     return XY;
 }
 
@@ -188,7 +190,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
   if(GPIO_Pin == GPIO_PIN_10)
   {
-	  if(XY.mode == 1)
+	  if(XY.mode == 1) // 0: gestures mode ,1: point mode ,2: mixed mode
 	  {
 		  XY = Touch_1IN28_Get_Point();
 	  }

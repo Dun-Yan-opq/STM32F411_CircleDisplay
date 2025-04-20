@@ -26,6 +26,7 @@ static void LVGL_task(void *arg)
 //	printf("Before LCD_1in28_test, stack: %lu words\r\n", uxTaskGetStackHighWaterMark(NULL));
 	lv_init();
 	lv_port_disp_init();
+	lv_port_indev_init();
 //	printf("After LCD_1in28_test, stack: %lu words\r\n", uxTaskGetStackHighWaterMark(NULL));
 
 	LVGL_Button();

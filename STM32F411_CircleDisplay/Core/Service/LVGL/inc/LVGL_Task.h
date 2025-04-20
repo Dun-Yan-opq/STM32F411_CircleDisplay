@@ -10,6 +10,7 @@
 
 #include "cmsis_os2.h"
 #include "lv_port_disp.h"
+#include "lv_port_indev.h"
 
 #ifdef __cplusplus
 extern "C" {
