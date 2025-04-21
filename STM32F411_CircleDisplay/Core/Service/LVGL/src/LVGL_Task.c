@@ -6,6 +6,11 @@
  */
 #include "LVGL_Task.h"
 
+// NXP GUI Guider
+#include "../generated/gui_guider.h"
+#include "../generated/events_init.h"
+lv_ui guider_ui;
+
 static osThreadId_t LVGL_Task_TaskHandle;
 
 static const osThreadAttr_t LVGL_Task_attributes ={
@@ -29,7 +34,12 @@ static void LVGL_task(void *arg)
 	lv_port_indev_init();
 //	printf("After LCD_1in28_test, stack: %lu words\r\n", uxTaskGetStackHighWaterMark(NULL));
 
-	LVGL_Button();
+	// LVGL raw ui setting
+//	LVGL_Button();
+
+	// NXP GUI Guider
+	setup_ui(&guider_ui);
+   	events_init(&guider_ui);
 
 	for(;;)
 	{
@@ -51,6 +61,7 @@ void LVGL_Label_Marquee(void)
 	lv_obj_align(label, LV_ALIGN_CENTER, 0, 20);
 }
 
+// 按鈕
 void LVGL_Button(void)
 {
 	lv_obj_t* switch_obj = lv_switch_create(lv_scr_act());
