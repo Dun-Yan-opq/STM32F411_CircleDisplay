@@ -15,7 +15,7 @@ static osThreadId_t LVGL_Task_TaskHandle;
 
 static const osThreadAttr_t LVGL_Task_attributes ={
 		.name 		= "LVGL_Task",
-		.priority 	= (osPriority_t)osPriorityNormal,
+		.priority 	= (osPriority_t)osPriorityHigh,
 		.stack_size = 4096
 };
 

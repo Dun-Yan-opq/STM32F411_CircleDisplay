@@ -29,8 +29,8 @@ void setup_scr_screen(lv_ui *ui)
     //Write codes screen_cont_1
     ui->screen_cont_1 = lv_obj_create(ui->screen);
     lv_obj_set_pos(ui->screen_cont_1, 0, 0);
-    lv_obj_set_size(ui->screen_cont_1, 240, 240);
-    lv_obj_set_scrollbar_mode(ui->screen_cont_1, LV_SCROLLBAR_MODE_OFF);
+    lv_obj_set_size(ui->screen_cont_1, 240, 359);
+    lv_obj_set_scrollbar_mode(ui->screen_cont_1, LV_SCROLLBAR_MODE_ON);
 
     //Write style for screen_cont_1, Part: LV_PART_MAIN, State: LV_STATE_DEFAULT.
     lv_obj_set_style_border_width(ui->screen_cont_1, 2, LV_PART_MAIN|LV_STATE_DEFAULT);
@@ -57,7 +57,7 @@ void setup_scr_screen(lv_ui *ui)
 
     // add needle line for ui->screen_meter_1_scale_0.
     ui->screen_meter_1_scale_0_ndline_0 = lv_meter_add_needle_line(ui->screen_meter_1, ui->screen_meter_1_scale_0, 5, lv_color_hex(0x000000), -10);
-    lv_meter_set_indicator_value(ui->screen_meter_1, ui->screen_meter_1_scale_0_ndline_0, 0);
+    lv_meter_set_indicator_value(ui->screen_meter_1, ui->screen_meter_1_scale_0_ndline_0, 30);
     lv_obj_set_pos(ui->screen_meter_1, 20, 20);
     lv_obj_set_size(ui->screen_meter_1, 200, 200);
 

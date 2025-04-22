@@ -170,8 +170,8 @@ Touch_1IN28_XY Touch_1IN28_Get_Point(void)
 		HAL_I2C_Master_Receive(&hi2c1, Touch_DEV_address, rx_data, sizeof(rx_data), HAL_MAX_DELAY);
 	    XY.x_point = ((rx_data[0] & 0x0f)<<8) + rx_data[1];
 	    XY.y_point = ((rx_data[2] & 0x0f)<<8) + rx_data[3];
-		printf("X:%d\r\n",XY.x_point);
-		printf("Y:%d\r\n",XY.y_point);
+//		printf("X:%d\r\n",XY.x_point);
+//		printf("Y:%d\r\n",XY.y_point);
 	}
     return XY;
 }

@@ -2,13 +2,25 @@
 
 LCD_1IN28_ATTRIBUTES LCD_1IN28;
 
-static void Spi_DMA_Write_many_bytes(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend, uint16_t *bitmap_color)
+static void Spi_DMA_SetWindows_Color(uint16_t window_size, uint16_t *bitmap_color)
 {
 	HAL_GPIO_WritePin(LCS_DC_GPIO_Port,LCS_DC_Pin, 1);
 
 	HAL_GPIO_WritePin(SPI1_CS_GPIO_Port,SPI1_CS_Pin, 0);
     // 啟動 SPI DMA 傳輸
-	HAL_SPI_Transmit_DMA(&hspi1, (uint8_t *)bitmap_color, (Xend - Xstart + 1) * (Yend - Ystart + 1) * 2);
+	HAL_SPI_Transmit_DMA(&hspi1, (uint8_t *)bitmap_color, window_size);
+	// 等待傳輸完成（可選）
+	while (HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
+	HAL_GPIO_WritePin(SPI1_CS_GPIO_Port,SPI1_CS_Pin, 1);
+}
+
+static void Spi_DMA_Set_Windows(uint8_t *data)
+{
+	HAL_GPIO_WritePin(LCS_DC_GPIO_Port,LCS_DC_Pin, 1);
+
+	HAL_GPIO_WritePin(SPI1_CS_GPIO_Port,SPI1_CS_Pin, 0);
+    // 啟動 SPI DMA 傳輸
+	HAL_SPI_Transmit_DMA(&hspi1, (uint8_t *)data, 11);
 	// 等待傳輸完成（可選）
 	while (HAL_SPI_GetState(&hspi1) != HAL_SPI_STATE_READY);
 	HAL_GPIO_WritePin(SPI1_CS_GPIO_Port,SPI1_CS_Pin, 1);
@@ -402,21 +414,43 @@ parameter:
 ********************************************************************************/
 void LCD_1IN28_SetWindows(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend)
 {
+//    //set the X coordinates
+//    LCD_1IN28_SendCommand(0x2A);
+//
+//    LCD_1IN28_SendData_8Bit(0x00);
+//    LCD_1IN28_SendData_8Bit(Xstart);
+//	LCD_1IN28_SendData_8Bit(0x00);
+//    LCD_1IN28_SendData_8Bit(Xend);
+//
+//    //set the Y coordinates
+//    LCD_1IN28_SendCommand(0x2B);
+//    LCD_1IN28_SendData_8Bit(0x00);
+//	LCD_1IN28_SendData_8Bit(Ystart);
+//	LCD_1IN28_SendData_8Bit(0x00);
+//    LCD_1IN28_SendData_8Bit(Yend);
+//
+//    LCD_1IN28_SendCommand(0X2C);
+
+	uint8_t data[4];
     //set the X coordinates
     LCD_1IN28_SendCommand(0x2A);
-    LCD_1IN28_SendData_8Bit(0x00);
-    LCD_1IN28_SendData_8Bit(Xstart);
-	LCD_1IN28_SendData_8Bit(0x00);
-    LCD_1IN28_SendData_8Bit(Xend);
+
+    data[0] = 0x00;
+	data[1] = Xstart;
+    data[2] = 0x00;
+    data[3] = Xend;
+    Spi_DMA_Set_Windows(data);
 
     //set the Y coordinates
     LCD_1IN28_SendCommand(0x2B);
-    LCD_1IN28_SendData_8Bit(0x00);
-	LCD_1IN28_SendData_8Bit(Ystart);
-	LCD_1IN28_SendData_8Bit(0x00);
-    LCD_1IN28_SendData_8Bit(Yend);
+    data[0] = 0x00;
+	data[1] = Ystart;
+    data[2] = 0x00;
+    data[3] = Yend;
+    Spi_DMA_Set_Windows(data);
 
     LCD_1IN28_SendCommand(0X2C);
+
 }
 
 /******************************************************************************
@@ -435,6 +469,6 @@ void LCD_1IN28_DrawPaint(uint16_t x, uint16_t y, uint16_t Color)
 void LCD_1IN28_Paint_LVGL_Wu(uint16_t Xstart, uint16_t Ystart, uint16_t Xend, uint16_t Yend, uint16_t *bitmap_color)
 {
 	LCD_1IN28_SetWindows(Xstart, Ystart, Xend, Yend);
-
-	Spi_DMA_Write_many_bytes(Xstart, Ystart, Xend, Yend, bitmap_color);
+	uint16_t window_size = (Xend - Xstart + 1) * (Yend - Ystart + 1) * 2; // 2是因為16 bit = 2 bytes
+	Spi_DMA_SetWindows_Color(window_size, bitmap_color);
 }

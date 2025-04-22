@@ -223,29 +223,29 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Core"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="FATFS"/>
-						<entry excluding="custom|generated|generated/guider_customer_fonts" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="GUI_Guider"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="GUI_Guider/custom"/>
-						<entry excluding="guider_customer_fonts" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="GUI_Guider/generated"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="GUI_Guider/generated/guider_customer_fonts"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LCD_GC9A01/Config/src"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LCD_GC9A01/Fonts/src"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LCD_GC9A01/LCD/src"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LCD_GC9A01/LCD_Demo/src"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LVGL/GUI/lvgl/examples/porting"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LVGL/GUI/lvgl/src/core"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LVGL/GUI/lvgl/src/extra"/>
+						<entry excluding="guider_customer_fonts" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="GUI_Guider/generated"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LVGL/GUI/lvgl/src/hal"/>
 						<entry excluding="sdl|stm32_dma2d|sw" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LVGL/GUI/lvgl/src/draw"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LVGL/GUI/lvgl/src/draw/sdl"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LVGL/GUI/lvgl/src/draw/stm32_dma2d"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LVGL/GUI/lvgl/src/draw/sw"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LVGL/GUI/lvgl/src/extra"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LVGL/GUI/lvgl/src/font"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LVGL/GUI/lvgl/src/hal"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LVGL/GUI/lvgl/src/misc"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LCD_GC9A01/Fonts/src"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="Core"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LCD_GC9A01/LCD_Demo/src"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LVGL/GUI/lvgl/src/widgets"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Middlewares"/>
+						<entry excluding="custom|generated|generated/guider_customer_fonts" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="GUI_Guider"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LVGL/GUI/lvgl/src/draw/stm32_dma2d"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LVGL/GUI/lvgl/src/misc"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LVGL/GUI/lvgl/src/draw/sw"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="GUI_Guider/custom"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="GUI_Guider/generated/guider_customer_fonts"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LCD_GC9A01/LCD/src"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LVGL/GUI/lvgl/examples/porting"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="FATFS"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LVGL/GUI/lvgl/src/font"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="LCD_GC9A01/Config/src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
